@@ -8,9 +8,9 @@ import androidx.room.PrimaryKey;
 @Entity(tableName = "regiony")
 public class Region {
     @PrimaryKey(autoGenerate = true)
-    @ColumnInfo(name = "id")
+    @ColumnInfo(name = "idR")
     private int id;
-    @ColumnInfo(name = "nazwa")
+    @ColumnInfo(name = "name")
     private String nazwa;
 
     @Ignore
@@ -18,8 +18,7 @@ public class Region {
     {
     }
 
-    public Region(int id, String nazwa) {
-        this.id = id;
+    public Region(String nazwa) {
         this.nazwa = nazwa;
     }
 
@@ -37,5 +36,12 @@ public class Region {
 
     public void setNazwa(String nazwa) {
         this.nazwa = nazwa;
+    }
+
+    @Override
+    public String toString() {
+        return "Region{" +
+                "nazwa='" + nazwa + '\'' +
+                '}';
     }
 }

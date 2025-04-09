@@ -16,7 +16,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintBottom_toTopOf="@+id/i2"
-        android:hint="Name" />
+        android:hint="Nazwa" />
 
     <EditText
         android:id="@+id/i2"
@@ -28,7 +28,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="@id/i1"
         app:layout_constraintBottom_toTopOf="@+id/i3"
-        android:hint="Name" />
+        android:hint="Opis" />
 
     <Spinner
         android:id="@+id/i3"
@@ -36,7 +36,7 @@
         android:layout_height="wrap_content"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@id/i2"
+        app:layout_constraintTop_toBottomOf="@id/i2"
         app:layout_constraintBottom_toTopOf="@+id/i4"/>
 
     <Switch
@@ -44,10 +44,10 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:ems="10"
-        android:hint="Name"
+        android:text="Bezpieczny"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@id/i3"
+        app:layout_constraintTop_toBottomOf="@id/i3"
         app:layout_constraintBottom_toTopOf="@+id/send"/>
 
     <Button
@@ -67,5 +67,5 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/send" />
+        app:layout_constraintTop_toBottomOf="@+id/send" />
 </androidx.constraintlayout.widget.ConstraintLayout>
