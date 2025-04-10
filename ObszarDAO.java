@@ -26,4 +26,6 @@ public interface ObszarDAO {
     List<Region> selectRegions();
     @Query("Select name FROM regiony WHERE idR = :id")
     String selectRegion(int id);
+    @Query("Select * FROM obszary WHERE id = :id")
+    Obszar selectObszar(int id);
 }

@@ -40,8 +40,6 @@ public class Region {
 
     @Override
     public String toString() {
-        return "Region{" +
-                "nazwa='" + nazwa + '\'' +
-                '}';
+        return  nazwa;
     }
 }

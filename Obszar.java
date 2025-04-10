@@ -24,6 +24,8 @@ import java.util.concurrent.Executors;
         }
 )
 public class Obszar{
+
+
     @PrimaryKey(autoGenerate = true)
     @ColumnInfo(name = "id")
     private int id;
@@ -103,16 +105,17 @@ public class Obszar{
 
     @Override
     public String toString() {
-        return "Obszar{" +
-                "nazwa='" + nazwa + '\'' +
-                ", opis='" + opis + '\'' +
-                ", idRegion=" + Region /*wczytajR()*/ +
-                ", bezpieczny=" + bezpieczny +
-                '}';
+        return  nazwa + '-' + Region;
     }
 
-    private String wczytajR() {
-                String output  = MainActivity.obszarDatabase.zwrocDao().selectRegion(idRegion);
-        return  output;
+    public String wypiszWszystko() {
+        return "Obszar{" +
+                "id=" + id +
+                ", nazwa='" + nazwa + '\'' +
+                ", opis='" + opis + '\'' +
+                ", idRegion=" + idRegion +
+                ", bezpieczny=" + bezpieczny +
+                ", Region='" + Region + '\'' +
+                '}';
     }
 }

@@ -32,12 +32,23 @@
 
     <Spinner
         android:id="@+id/i3"
-        android:layout_width="match_parent"
+        android:layout_width="300dp"
         android:layout_height="wrap_content"
-        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintBottom_toTopOf="@+id/i4"
+        app:layout_constraintEnd_toStartOf="@id/dodajR"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/i2"
-        app:layout_constraintBottom_toTopOf="@+id/i4"/>
+        app:layout_constraintTop_toBottomOf="@id/i2" />
+
+    <Button
+        android:id="@+id/dodajR"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:text="+"
+        app:layout_constraintBottom_toTopOf="@+id/i4"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/i3"
+        app:layout_constraintTop_toBottomOf="@+id/i2" />
+
 
     <Switch
         android:id="@+id/i4"
@@ -54,11 +65,36 @@
         android:id="@+id/send"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Button"
+        android:text="Dodaj"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@id/i4"
+        app:layout_constraintTop_toBottomOf="@id/i4"
         app:layout_constraintBottom_toTopOf="@+id/list"/>
+
+    <Button
+        android:id="@+id/pob"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="wczytaj"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.947"
+        app:layout_constraintStart_toEndOf="@+id/send"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.736" />
+
+    <EditText
+        android:id="@+id/pobi"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:hint="wczytaj"
+        android:inputType="number"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/send"
+        app:layout_constraintHorizontal_bias="0.357"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.737" />
 
     <ListView
         android:id="@+id/list"

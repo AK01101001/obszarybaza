@@ -10,7 +10,6 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
-import android.text.Editable;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -23,7 +22,7 @@ import java.util.List;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
-public class MainActivity extends AppCompatActivity {
+public class DodanieRegionuActivity extends AppCompatActivity {
 
     ActivityMainBinding binding;
     ArrayAdapter<Obszar> adapter;
@@ -65,20 +64,12 @@ public class MainActivity extends AppCompatActivity {
                 usun(i);
             }
         });
-        binding.dodajR.setOnClickListener(view1 -> dodanieRegionu());
-        binding.pob.setOnClickListener(view1 -> pobierzRegion(binding.pobi.getText().toString()));
-
+        //binding. .setOnClickListener(view1 -> powrot());  //TU!!
         //wykonaj();
     }
 
-    private void pobierzRegion(String id) {
-
-        Toast.makeText(this, obszarDatabase.zwrocDao().selectObszar(Integer.parseInt(id)).wypiszWszystko(), Toast.LENGTH_SHORT).show();
-
-    }
-
-    private void dodanieRegionu() {
-        Intent intent = new Intent(MainActivity.this, DodanieRegionuActivity.class);
+    private void powrot() {
+        Intent intent = new Intent(DodanieRegionuActivity.this, MainActivity.class);
         startActivity(intent);
     }
 
@@ -99,7 +90,7 @@ public class MainActivity extends AppCompatActivity {
                 }
 
             }
-             final boolean powtorzenie2 = powtorzenie;
+            final boolean powtorzenie2 = powtorzenie;
             ExecutorService executorService = Executors.newSingleThreadExecutor();
             Handler handler = new Handler(Looper.getMainLooper());
             executorService.execute(new Runnable() {
@@ -123,11 +114,11 @@ public class MainActivity extends AppCompatActivity {
                                 public void run() {
                                     if (powtorzenie2)
                                     {
-                                        Toast.makeText(MainActivity.this, "zmodyfikowano", Toast.LENGTH_SHORT).show();
+                                        Toast.makeText(DodanieRegionuActivity.this, "zmodyfikowano", Toast.LENGTH_SHORT).show();
                                     }
                                     else
                                     {
-                                        Toast.makeText(MainActivity.this, "dodano", Toast.LENGTH_SHORT).show();
+                                        Toast.makeText(DodanieRegionuActivity.this, "dodano", Toast.LENGTH_SHORT).show();
                                     }
                                     wczytaj();
                                     adapter.notifyDataSetChanged();
@@ -153,7 +144,7 @@ public class MainActivity extends AppCompatActivity {
         obszary = new ArrayList<Obszar>();
         obszarRegiony = obszarDatabase.zwrocDao().selectAll();
         for (ObszarRegion obszarRegion:
-             obszarRegiony) {
+                obszarRegiony) {
             obszary.add(new Obszar(
                     obszarRegion.obszar.getNazwa(),
                     obszarRegion.obszar.getOpis(),
@@ -163,7 +154,7 @@ public class MainActivity extends AppCompatActivity {
             ));
 
         }
-        adapter = new ArrayAdapter<Obszar>(MainActivity.this,
+        adapter = new ArrayAdapter<Obszar>(DodanieRegionuActivity.this,
                 android.R.layout.simple_list_item_1, obszary);
         binding.list.setAdapter(adapter);
 
@@ -174,19 +165,15 @@ public class MainActivity extends AppCompatActivity {
     {
         regiony = new ArrayList<Region>();
         regiony = obszarDatabase.zwrocDao().selectRegions();
-        adapter2 = new ArrayAdapter<Region>(MainActivity.this,
+        adapter2 = new ArrayAdapter<Region>(DodanieRegionuActivity.this,
                 android.R.layout.simple_list_item_1, regiony);
         binding.i3.setAdapter(adapter2);
     }
 
     private void wykonaj() {
-        obszarDatabase.zwrocDao().insertR(new Region("region1"));
-        obszarDatabase.zwrocDao().insertR(new Region("region1"));
-
-        /*obszarDatabase.zwrocDao().deleteAtId(2);*/
+        //obszarDatabase.zwrocDao().insertR(new Region("region2"));
+        obszarDatabase.zwrocDao().deleteAtId(2);
         wczytaj();
-        wczytajR();
-
         adapter.notifyDataSetChanged();
 
 
