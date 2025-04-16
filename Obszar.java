@@ -20,6 +20,16 @@ import java.util.concurrent.Executors;
                 entity = Region.class,
                 parentColumns ="idR",
                 childColumns = "idRegion"
+        ),
+        @ForeignKey(
+                entity = Kontynent.class,
+                parentColumns ="idK",
+                childColumns = "idKontynent"
+        ),
+        @ForeignKey(
+                entity = TypStworzen.class,
+                parentColumns ="idS",
+                childColumns = "idTypStworzen"
         )
         }
 )
@@ -35,10 +45,18 @@ public class Obszar{
     private String opis;
     @ColumnInfo(name = "idRegion")
     private int idRegion;
+    @ColumnInfo(name = "idKontynent")
+    private int idKontynentu;
+    @ColumnInfo(name = "idTypStworzen")
+    private int idTypStworzen;
     @ColumnInfo(name = "bezpieczny")
     private boolean bezpieczny;
     @Ignore
     private String Region;
+    @Ignore
+    private String Kontynent;
+    @Ignore
+    private String TypStworzen;
 
 
 
@@ -54,20 +72,25 @@ public class Obszar{
         this.idRegion = idRegion;
     }
 
-    public Obszar(String nazwa, String opis, int idRegion, boolean bezpieczny) {
+    public Obszar(String nazwa, String opis, boolean bezpieczny, int idRegion, int idKontynentu, int idTypStworzen) {
         this.id = 0;
         this.nazwa = nazwa;
         this.opis = opis;
         this.idRegion = idRegion;
+        this.idKontynentu = idKontynentu;
+        this.idTypStworzen = idTypStworzen;
         this.bezpieczny = bezpieczny;
     }
+
     @Ignore
-    public Obszar(String nazwa, String opis, String Region, boolean bezpieczny) {
+    public Obszar(String nazwa, String opis, boolean bezpieczny, String region, String kontynent, String typStworzen) {
         this.id = 0;
         this.nazwa = nazwa;
         this.opis = opis;
-        this.Region = Region;
         this.bezpieczny = bezpieczny;
+        Region = region;
+        Kontynent = kontynent;
+        TypStworzen = typStworzen;
     }
 
     public int getId() {
@@ -103,9 +126,49 @@ public class Obszar{
         this.bezpieczny = bezpieczny;
     }
 
+    public int getIdKontynentu() {
+        return idKontynentu;
+    }
+
+    public void setIdKontynentu(int idKontynentu) {
+        this.idKontynentu = idKontynentu;
+    }
+
+    public int getIdTypStworzen() {
+        return idTypStworzen;
+    }
+
+    public void setIdTypStworzen(int idTypStworzen) {
+        this.idTypStworzen = idTypStworzen;
+    }
+
+    public String getRegion() {
+        return Region;
+    }
+
+    public void setRegion(String region) {
+        Region = region;
+    }
+
+    public String getKontynent() {
+        return Kontynent;
+    }
+
+    public void setKontynent(String kontynent) {
+        Kontynent = kontynent;
+    }
+
+    public String getTypStworzen() {
+        return TypStworzen;
+    }
+
+    public void setTypStworzen(String typStworzen) {
+        TypStworzen = typStworzen;
+    }
+
     @Override
     public String toString() {
-        return  nazwa + '-' + Region;
+        return  nazwa + '-' + Region+ '-' + Kontynent;
     }
 
     public String wypiszWszystko() {

@@ -5,20 +5,20 @@ import androidx.room.Entity;
 import androidx.room.Ignore;
 import androidx.room.PrimaryKey;
 
-@Entity(tableName = "regiony")
-public class Region {
+@Entity(tableName = "kontynenty")
+public class Kontynent {
     @PrimaryKey(autoGenerate = true)
-    @ColumnInfo(name = "idR")
+    @ColumnInfo(name = "idK")
     private int id;
-    @ColumnInfo(name = "nameR")
+    @ColumnInfo(name = "nameK")
     private String nazwa;
 
     @Ignore
-    public Region()
+    public Kontynent()
     {
     }
 
-    public Region(String nazwa) {
+    public Kontynent(String nazwa) {
         this.nazwa = nazwa;
     }
 

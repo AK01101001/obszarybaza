@@ -10,7 +10,6 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
-import android.text.Editable;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -27,11 +26,18 @@ public class MainActivity extends AppCompatActivity {
 
     ActivityMainBinding binding;
     ArrayAdapter<Obszar> adapter;
-    ArrayAdapter<Region> adapter2;
+    ArrayAdapter<Region> adapterR;
+    ArrayAdapter<Kontynent> adapterK;
+    ArrayAdapter<TypStworzen> adapterS;
     List<ObszarRegion> obszarRegiony;
     List<Obszar> obszary;
     static ObszarDatabase obszarDatabase;
+
     private List<Region> regiony;
+
+    private List<Kontynent> kontynenty;
+
+    private List<TypStworzen> typyStworzen;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -58,6 +64,8 @@ public class MainActivity extends AppCompatActivity {
                 .build();
         wczytaj();
         wczytajR();
+        wczytajK();
+        wczytajS();
         binding.send.setOnClickListener(view1 -> dodaj());
         binding.list.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
@@ -66,9 +74,10 @@ public class MainActivity extends AppCompatActivity {
             }
         });
         binding.dodajR.setOnClickListener(view1 -> dodanieRegionu());
-        binding.pob.setOnClickListener(view1 -> pobierzRegion(binding.pobi.getText().toString()));
+        binding.dodajK.setOnClickListener(view1 -> dodanieKontynentu());
+        binding.dodajS.setOnClickListener(view1 -> dodanieStworzen());
 
-        //wykonaj();
+        wykonaj();
     }
 
     private void pobierzRegion(String id) {
@@ -81,11 +90,19 @@ public class MainActivity extends AppCompatActivity {
         Intent intent = new Intent(MainActivity.this, DodanieRegionuActivity.class);
         startActivity(intent);
     }
+    private void dodanieKontynentu() {
+        Intent intent = new Intent(MainActivity.this, DodanieRegionuActivity.class);
+        startActivity(intent);
+    }
+    private void dodanieStworzen() {
+        Intent intent = new Intent(MainActivity.this, DodanieRegionuActivity.class);
+        startActivity(intent);
+    }
 
     private void dodaj() {
-        if (!binding.i1.getText().toString().equals("") && !binding.i2.getText().toString().equals("") && !binding.i3.getSelectedItem().toString().equals("")) {
+        if (!binding.i1.getText().toString().equals("") && !binding.i2.getText().toString().equals("") && !binding.iR.getSelectedItem().toString().equals("")&& !binding.iK.getSelectedItem().toString().equals("") && !binding.iS.getSelectedItem().toString().equals("")) {
             Obszar obszar;
-            obszar = new Obszar(binding.i1.getText().toString(), binding.i2.getText().toString(), binding.i3.getSelectedItemPosition()+1, binding.i4.isChecked() );
+            obszar = new Obszar(binding.i1.getText().toString(), binding.i2.getText().toString(),binding.i4.isChecked(), binding.iR.getSelectedItemPosition()+1,binding.iK.getSelectedItemPosition()+1 ,binding.iS.getSelectedItemPosition()+1  );
             boolean powtorzenie = false;
             //sprawdzanie obecności
             for (ObszarRegion obszar2 :
@@ -157,8 +174,11 @@ public class MainActivity extends AppCompatActivity {
             obszary.add(new Obszar(
                     obszarRegion.obszar.getNazwa(),
                     obszarRegion.obszar.getOpis(),
+
+                    obszarRegion.obszar.isBezpieczny(),
                     obszarRegion.region.getNazwa(),
-                    obszarRegion.obszar.isBezpieczny()
+                    obszarRegion.kontynent.getNazwa(),
+                    obszarRegion.typStworzen.getNazwa()
 
             ));
 
@@ -174,18 +194,39 @@ public class MainActivity extends AppCompatActivity {
     {
         regiony = new ArrayList<Region>();
         regiony = obszarDatabase.zwrocDao().selectRegions();
-        adapter2 = new ArrayAdapter<Region>(MainActivity.this,
+        adapterR = new ArrayAdapter<Region>(MainActivity.this,
                 android.R.layout.simple_list_item_1, regiony);
-        binding.i3.setAdapter(adapter2);
+        binding.iR.setAdapter(adapterR);
+    }
+    void wczytajK()
+    {
+        kontynenty = new ArrayList<Kontynent>();
+        kontynenty = obszarDatabase.zwrocDao().selectKontynents();
+        adapterK = new ArrayAdapter<Kontynent>(MainActivity.this,
+                android.R.layout.simple_list_item_1, kontynenty);
+        binding.iK.setAdapter(adapterK);
+    }
+    void wczytajS()
+    {
+        typyStworzen = new ArrayList<TypStworzen>();
+        typyStworzen = obszarDatabase.zwrocDao().selectStworzenia();
+        adapterS = new ArrayAdapter<TypStworzen>(MainActivity.this,
+                android.R.layout.simple_list_item_1, typyStworzen);
+        binding.iS.setAdapter(adapterS);
     }
 
     private void wykonaj() {
         obszarDatabase.zwrocDao().insertR(new Region("region1"));
-        obszarDatabase.zwrocDao().insertR(new Region("region1"));
+
+        obszarDatabase.zwrocDao().insertK(new Kontynent("kontynent1"));
+        obszarDatabase.zwrocDao().insertS(new TypStworzen("sworzen1"));
 
         /*obszarDatabase.zwrocDao().deleteAtId(2);*/
         wczytaj();
+
         wczytajR();
+        wczytajK();
+        wczytajS();
 
         adapter.notifyDataSetChanged();
 

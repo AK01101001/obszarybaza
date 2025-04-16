@@ -7,5 +7,9 @@ public class ObszarRegion {
     Obszar obszar;
     @Embedded
     Region region;
+    @Embedded
+    Kontynent kontynent;
+    @Embedded
+    TypStworzen typStworzen;
 
 }

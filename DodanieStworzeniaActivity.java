@@ -15,25 +15,24 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Toast;
 
-import com.example.bazaregionow.databinding.ActivityDodanieRegionuBinding;
+import com.example.bazaregionow.databinding.ActivityDodanieStworzeniaBinding;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
-public class DodanieRegionuActivity extends AppCompatActivity {
+public class DodanieStworzeniaActivity extends AppCompatActivity {
 
-    ActivityDodanieRegionuBinding binding;
-    ArrayAdapter<Region> adapter;
-    List<ObszarRegion> obszarRegiony;
-    List<Region> regiony;
+    ActivityDodanieStworzeniaBinding binding;
+    ArrayAdapter<TypStworzen> adapter;
+    List<TypStworzen> stworzenia;
     static ObszarDatabase obszarDatabase;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        binding = ActivityDodanieRegionuBinding.inflate(getLayoutInflater());
+        binding = ActivityDodanieStworzeniaBinding.inflate(getLayoutInflater());
         View view = binding.getRoot();
         setContentView(view);
         RoomDatabase.Callback callback = new RoomDatabase.Callback() {
@@ -61,26 +60,26 @@ public class DodanieRegionuActivity extends AppCompatActivity {
                 usun(i);
             }
         });
-        binding.powrot.setOnClickListener(view1 -> powrot());  //TU!!
+        binding.powrot.setOnClickListener(view1 -> powrot());
         //wykonaj();
     }
 
     private void powrot() {
-        Intent intent = new Intent(DodanieRegionuActivity.this, MainActivity.class);
+        Intent intent = new Intent(DodanieStworzeniaActivity.this, MainActivity.class);
         startActivity(intent);
     }
 
     private void dodaj() {
         if (!binding.i1.getText().toString().equals("")){
-            Region region;
-            region = new Region(binding.i1.getText().toString());
+            TypStworzen stworzen;
+            stworzen = new TypStworzen(binding.i1.getText().toString());
             boolean powtorzenie = false;
             //sprawdzanie obecności
-            for (Region region1 :
-                    regiony) {
-                if (region.getNazwa().equals(region1.getNazwa()))
+            for (TypStworzen stworzen1 :
+                    stworzenia) {
+                if (stworzen.getNazwa().equals(stworzen1.getNazwa()))
                 {
-                    Toast.makeText(this, "Region już istnieje w bierzącym kontekście", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(this, "Kontynenty już istnieje w bierzącym kontekście", Toast.LENGTH_SHORT).show();
                     return;
                 }
 
@@ -91,14 +90,14 @@ public class DodanieRegionuActivity extends AppCompatActivity {
                 @Override
                 public void run() {
 
-                        obszarDatabase.zwrocDao().insertR(region);
+                    obszarDatabase.zwrocDao().insertS(stworzen);
 
                     handler.post(
                             new Runnable() {
                                 @Override
                                 public void run() {
 
-                                        Toast.makeText(DodanieRegionuActivity.this, "dodano", Toast.LENGTH_SHORT).show();
+                                    Toast.makeText(DodanieStworzeniaActivity.this, "dodano", Toast.LENGTH_SHORT).show();
 
                                     wczytaj();
                                     adapter.notifyDataSetChanged();
@@ -112,17 +111,17 @@ public class DodanieRegionuActivity extends AppCompatActivity {
     }
 
     private void usun(int i) {
-        obszarDatabase.zwrocDao().deleteR(regiony.get(i));
+        obszarDatabase.zwrocDao().deleteS(stworzenia.get(i));
         wczytaj();
         adapter.notifyDataSetChanged();
 
     }
     void wczytaj()
     {
-        regiony = new ArrayList<Region>();
-        regiony = obszarDatabase.zwrocDao().selectRegions();
-        adapter = new ArrayAdapter<Region>(DodanieRegionuActivity.this,
-                android.R.layout.simple_list_item_1, regiony);
+        stworzenia = new ArrayList<TypStworzen>();
+        stworzenia = obszarDatabase.zwrocDao().selectStworzenia();
+        adapter = new ArrayAdapter<TypStworzen>(DodanieStworzeniaActivity.this,
+                android.R.layout.simple_list_item_1, stworzenia);
         binding.list.setAdapter(adapter);
     }
 
