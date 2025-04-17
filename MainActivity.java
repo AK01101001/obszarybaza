@@ -32,6 +32,7 @@ public class MainActivity extends AppCompatActivity {
     List<ObszarRegion> obszarRegiony;
     List<Obszar> obszary;
     static ObszarDatabase obszarDatabase;
+    int id;
 
     private List<Region> regiony;
 
@@ -45,6 +46,8 @@ public class MainActivity extends AppCompatActivity {
         binding = ActivityMainBinding.inflate(getLayoutInflater());
         View view = binding.getRoot();
         setContentView(view);
+        Intent intent = getIntent();
+        id =Integer.parseInt(intent.getStringExtra("id"));
         RoomDatabase.Callback callback = new RoomDatabase.Callback() {
             @Override
             public void onCreate(@NonNull SupportSQLiteDatabase db) {
@@ -67,23 +70,18 @@ public class MainActivity extends AppCompatActivity {
         wczytajK();
         wczytajS();
         binding.send.setOnClickListener(view1 -> dodaj());
-        binding.list.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-                usun(i);
-            }
-        });
+        binding.powrot.setOnClickListener(view1 -> powrot());
         binding.dodajR.setOnClickListener(view1 -> dodanieRegionu());
         binding.dodajK.setOnClickListener(view1 -> dodanieKontynentu());
         binding.dodajS.setOnClickListener(view1 -> dodanieStworzen());
 
-        wykonaj();
+        binding.delete.setOnClickListener(view1 -> usun(id));
+        //wykonaj();
     }
 
-    private void pobierzRegion(String id) {
-
-        Toast.makeText(this, obszarDatabase.zwrocDao().selectObszar(Integer.parseInt(id)).wypiszWszystko(), Toast.LENGTH_SHORT).show();
-
+    private void powrot() {
+        Intent intent = new Intent(MainActivity.this, ListActivity.class);
+        startActivity(intent);
     }
 
     private void dodanieRegionu() {
@@ -131,7 +129,7 @@ public class MainActivity extends AppCompatActivity {
                     else
                     {
                         obszarDatabase.zwrocDao().insert(obszar);
-
+                        id = obszar.getId();
                     }
 
                     handler.post(
@@ -159,16 +157,15 @@ public class MainActivity extends AppCompatActivity {
 
     private void usun(int i) {
         obszarDatabase.zwrocDao().delete(obszarRegiony.get(i).obszar);
-        wczytaj();
-        adapter.notifyDataSetChanged();
-
+        id=0;
+        powrot();
     }
 
 
     private void wczytaj() {
 
         obszary = new ArrayList<Obszar>();
-        obszarRegiony = obszarDatabase.zwrocDao().selectAll();
+        obszarRegiony.add(obszarDatabase.zwrocDao().selectObszar(id));
         for (ObszarRegion obszarRegion:
              obszarRegiony) {
             obszary.add(new Obszar(
@@ -183,11 +180,12 @@ public class MainActivity extends AppCompatActivity {
             ));
 
         }
-        adapter = new ArrayAdapter<Obszar>(MainActivity.this,
-                android.R.layout.simple_list_item_1, obszary);
-        binding.list.setAdapter(adapter);
-
-
+        binding.i1.setText(obszarRegiony.get(0).obszar.getNazwa());
+        binding.i2.setText(obszarRegiony.get(0).obszar.getOpis());
+        binding.iR.setSelection(obszarRegiony.get(0).region.getId());
+        binding.iK.setSelection(obszarRegiony.get(0).kontynent.getId());
+        binding.iS.setSelection(obszarRegiony.get(0).typStworzen.getId());
+        binding.i4.setChecked(obszarRegiony.get(0).obszar.isBezpieczny());
 
     }
     void wczytajR()

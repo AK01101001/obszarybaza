@@ -34,8 +34,9 @@ public interface ObszarDAO {
     List<TypStworzen> selectStworzenia();
     @Query("Select nameR FROM regiony WHERE idR = :id")
     String selectRegion(int id);
-    @Query("Select * FROM obszary WHERE id = :id")
-    Obszar selectObszar(int id);
+    @Query("Select *, regiony.*, kontynenty.*,typStworzen.* FROM obszary Inner Join regiony On idRegion=regiony.idR Inner JOIN kontynenty On idKontynent=kontynenty.idK inner join typStworzen on idTypStworzen = typStworzen.idS WHERE obszary.id = :id")
+
+    ObszarRegion selectObszar(int id);
     @Delete
     void deleteR(Region region);
     @Delete

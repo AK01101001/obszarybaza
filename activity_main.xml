@@ -5,7 +5,17 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".MainActivity">
-
+    <Button
+        android:id="@+id/powrot"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="wroć"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.0" />
     <EditText
         android:id="@+id/i1"
         android:layout_width="wrap_content"
@@ -102,10 +112,19 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Dodaj"
-        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintEnd_toStartOf="@id/delete"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/i4"
-        app:layout_constraintBottom_toTopOf="@+id/list"/>
+        app:layout_constraintBottom_toBottomOf="parent"/>
+    <Button
+        android:id="@+id/delete"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Usuń"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@id/send"
+        app:layout_constraintTop_toBottomOf="@id/i4"
+        app:layout_constraintBottom_toBottomOf="parent"/>
 
 
     <!--<Button
@@ -131,7 +150,7 @@
         app:layout_constraintHorizontal_bias="0.357"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.737" />-->
+        app:layout_constraintVertical_bias="0.737" />
 
     <ListView
         android:id="@+id/list"
@@ -140,5 +159,5 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/send" />
+        app:layout_constraintTop_toBottomOf="@+id/send" />-->
 </androidx.constraintlayout.widget.ConstraintLayout>
